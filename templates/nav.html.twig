@@ -1,7 +1,0 @@
-<nav>
-    <a href="{{ path('home')}}">All</a> |
-    {% for lego in liste %}
-    <a href="{{ path('lego_category', {'legocollection.name'})}}">{{legocollection.name}}</a> |
-    
-    {% endfor %}
-</nav>
