@@ -8,7 +8,15 @@ use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+
+use App\Controller\Admin\ProductCrudController;
+
+
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[ORM\InheritanceType('SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
+#[ORM\DiscriminatorMap(['sneakers' => Sneakers::class, 'polos' => Polos::class, 'pants' => Pants::class])]
+
 #[ApiResource(
     operations: [
         new Get(),
@@ -106,4 +114,16 @@ class Product
 
         return $this;
     }
+
+    // public function getDiscr(): ?string
+    // {
+    //     return $this->discr;
+    // }
+
+    // public function setDiscr(string $discr): self
+    // {
+    //     $this->discr = $discr;
+
+    //     return $this;
+    // }
 }
