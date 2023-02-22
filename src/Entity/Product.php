@@ -3,12 +3,15 @@
 namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Controller\Admin\ProductCrudController;
 
 
@@ -17,34 +20,35 @@ use App\Controller\Admin\ProductCrudController;
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
 #[ORM\DiscriminatorMap(['sneakers' => Sneakers::class, 'polos' => Polos::class, 'pants' => Pants::class])]
 
-#[ApiResource(
-    operations: [
-        new Get(),
-        new GetCollection(),
-        // new Put(),
-        // new Delete(),
-        // new Post(),
-    ],
-    formats: ['json'],
-    )
-]
+#[ApiResource( formats: ['json'])]
+#[GetCollection]
+#[Get]
 class Product
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['cat:get'])]
     private ?int $id = null;
 
+   
     #[ORM\Column(length: 255)]
+    #[Groups(['cat:get'])]
     private ?string $name = null;
 
+   
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['cat:get'])]
     private ?string $description = null;
 
+   
     #[ORM\Column]
+    #[Groups(['cat:get'])]
     private ?float $price = null;
 
+   
     #[ORM\Column(length: 255)]
+    #[Groups(['cat:get'])]
     private ?string $img = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
@@ -114,16 +118,4 @@ class Product
 
         return $this;
     }
-
-    // public function getDiscr(): ?string
-    // {
-    //     return $this->discr;
-    // }
-
-    // public function setDiscr(string $discr): self
-    // {
-    //     $this->discr = $discr;
-
-    //     return $this;
-    // }
 }

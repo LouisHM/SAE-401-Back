@@ -6,24 +6,30 @@ use App\Entity\Product;
 use App\Repository\SneakersRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SneakersRepository::class)]
 class Sneakers extends Product
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column(type: Types::ARRAY)]
-    private array $size = [];
-
-    #[ORM\Column(type: Types::ARRAY)]
+    #[Groups(['cat:get'])]
     private array $color = [];
 
-    public function getId(): ?int
+    #[ORM\Column(type: Types::ARRAY)]
+    #[Groups(['cat:get'])]
+    private array $size = [];
+
+    public function getColor(): array
     {
-        return $this->id;
+        return $this->color;
+    }
+
+    public function setColor(array $color): self
+    {
+        $this->color = $color;
+
+        return $this;
     }
 
     public function getSize(): array
@@ -34,18 +40,6 @@ class Sneakers extends Product
     public function setSize(array $size): self
     {
         $this->size = $size;
-
-        return $this;
-    }
-
-    public function getColor(): array
-    {
-        return $this->color;
-    }
-
-    public function setColor(array $color): self
-    {
-        $this->color = $color;
 
         return $this;
     }
