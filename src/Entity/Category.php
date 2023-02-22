@@ -31,7 +31,7 @@ class Category
     #[Groups(['cat:get'])]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(length: 500)]
     #[Groups(['cat:get'])]
     private ?string $description = null;
 
