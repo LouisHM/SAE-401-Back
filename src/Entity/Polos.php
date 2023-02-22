@@ -4,10 +4,15 @@ namespace App\Entity;
 
 use App\Entity\Product;
 use App\Repository\PolosRepository;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource( formats: ['json'])]
+#[GetCollection]
+#[Get]
 #[ORM\Entity(repositoryClass: PolosRepository::class)]
 class Polos extends Product
 {

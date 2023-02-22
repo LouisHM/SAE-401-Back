@@ -4,11 +4,17 @@ namespace App\Entity;
 
 use App\Entity\Product;
 use App\Repository\SneakersRepository;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SneakersRepository::class)]
+
+#[ApiResource( formats: ['json'])]
+#[GetCollection]
+#[Get]
 class Sneakers extends Product
 {
 
